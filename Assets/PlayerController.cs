@@ -14,22 +14,41 @@ public class PlayerController : MonoBehaviour
     public Transform groundPoint;
     public GameObject sprite;
     public bool grounded;
+    bool triggerGrounded;
     public float jumpTimer;
     public float jumpForce;
     public float takeoffForce;
     Vector3 targetDir;
     float turnSpeed;
     public float downForce;
+    public float momMulti;
+    float glidey;
+
+    public GameObject test;
+
+    Vector2 direction;
+
+    public float test2;
+
+    Vector2 hNormal;
+
+    SpriteRenderer sr;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        test2 = rb.velocity.y;
+
+        test.transform.position = transform.position + new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0);
+
         // CONSTANTS
         if (grounded)
         {
@@ -40,37 +59,49 @@ public class PlayerController : MonoBehaviour
             step = speedMul / 1.1f * (-Mathf.Abs(rb.velocity.x * .15f) + 2f) * Time.deltaTime;
         }
 
-        if (!grounded && rb.gravityScale < 2.5f)
-            rb.gravityScale += Time.deltaTime * 1.2f;
+        if (!grounded && rb.gravityScale < 3.7f)
+            rb.gravityScale += Time.deltaTime * glidey;
 
 
-        RaycastHit2D hit1 = Physics2D.Raycast(transform.position - new Vector3(0.6f, 0.0f, 0.0f), Vector2.down, 10f);
-        RaycastHit2D hit2 = Physics2D.Raycast(transform.position + new Vector3(0.6f, 0.0f, 0.0f), Vector2.down, 10f);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 10f);
 
-        Debug.DrawRay(transform.position - new Vector3(0.6f, 0.0f, 0.0f), Vector2.down * 10f, Color.red);
-        Debug.DrawRay(transform.position + new Vector3(0.6f, 0.0f, 0.0f), Vector2.down * 10f, Color.red);
+        if(hit.collider != null)
+            Debug.DrawRay(hit.point, hit.normal * 2, Color.green);
 
-        Debug.DrawLine(hit1.point, hit2.point, Color.blue);
+        Debug.DrawRay(transform.position, Vector2.down * 10f, Color.red);
 
-        Vector2 direction = (hit2.point - hit1.point).normalized;
+        if (hit.collider != null)
+        {
+            hNormal = hit.normal;
+        }
 
+        direction = Vector2.up;
 
         // SPRITES
+
         if (grounded)
         {
+            sr.color = Color.green;
+
+            if (hit.collider != null)
+            {
+                direction = hit.normal;
+            }
             targetDir = direction;
-            turnSpeed = 20f;
+            turnSpeed = 0.2f;
         }
         else
         {
-            targetDir = (direction + Vector2.right * (Vector2.Distance(hit1.point, transform.position) / 10f));
+            sr.color = Color.red;
+
+            targetDir = (direction + Vector2.up * (Vector2.Distance(hit.point, transform.position) / 10f));
             //Vector3.Normalize(targetDir);
 
 
         }
 
 
-        sprite.transform.right = Vector3.Slerp(sprite.transform.right, targetDir, turnSpeed);
+        sprite.transform.up = Vector3.Slerp(sprite.transform.up, targetDir, turnSpeed);
 
 
         // HORIZONTAL MOVEMENT
@@ -93,10 +124,16 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxisRaw("Horizontal") == 0)
         {
             rb.AddForce(-rb.velocity);
+
+            momMulti = 1f;
         }
         else
         {
-            rb.AddForce(dir * step / 4f + spriteDir * step);
+            rb.AddForce(dir * step + spriteDir * step * momMulti);
+
+            if (rb.velocity.magnitude > 10f)
+                momMulti = Mathf.Clamp(momMulti + (rb.velocity.magnitude * 2f) * Time.deltaTime * 0.05f, -4f, 4f);
+                
         }
 
         // JUMP
@@ -111,14 +148,21 @@ public class PlayerController : MonoBehaviour
         {
             jumpTimer -= Time.deltaTime;
             rb.AddForce(transform.up * (jumpForce / 150) * jumpTimer);
+
+            glidey = 0;
         }
+        else
+        {
+            glidey = 1.8f;
+        }
+
 
 
         if (Input.GetAxisRaw("Vertical") < 0)
         {
             //rb.AddForce(-sprite.transform.up * Mathf.Abs(rb.velocity.x) * downForce * Time.deltaTime + -transform.up * downForce * Time.deltaTime);
 
-            float sweetSport = Mathf.Clamp(Vector2.Distance(hit1.point, transform.position), 0, 1f);
+            float sweetSport = Mathf.Clamp(Vector2.Distance(hit.point, transform.position), 0, 1f);
             rb.AddForce(-sprite.transform.up * Mathf.Abs(rb.velocity.x) * downForce * (sweetSport * 2f) * Time.deltaTime);
         }
 
@@ -129,7 +173,32 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("ground"))
         {
-            grounded = true;
+
+            //check normal y transform
+            //check y velocity
+
+            //            if (rb.velocity.y <= -0.5f || hNormal.y > 0.6f)
+
+            if (hNormal.y < 0.3f)
+                hNormal.y = -1;
+
+            bool tooSteep = hNormal.y < 0;
+            bool movingDown = rb.velocity.y < 0;
+
+            if (movingDown)
+            {
+                grounded = true;
+            } else if(!movingDown && !tooSteep)
+            {
+                grounded = true;
+            }
+            else if (!triggerGrounded)
+            {
+                grounded = false;
+            }
+;
+
+
             ContactPoint2D point = collision.GetContact(0);
 
             
@@ -148,7 +217,7 @@ public class PlayerController : MonoBehaviour
         {
 
             //rb.mass = 0.5f;
-            rb.gravityScale = 0.6f;
+            rb.gravityScale = 1.7f;
         }
     }
 
@@ -158,7 +227,9 @@ public class PlayerController : MonoBehaviour
         {
             //rb.mass = 0.35f;
 
-            grounded = false;
+            triggerGrounded = false;
+
+            rb.gravityScale = 1f;
 
             groundPoint.position = transform.position;
 
