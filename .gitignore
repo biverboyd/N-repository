@@ -1,17 +1,41 @@
+###
+# Unity folders and files
+###
+[Aa]ssets/AssetStoreTools*
+[Bb]uild/
+[Ll]ibrary/
+[Ll]ocal[Cc]ache/
+[Oo]bj/
+[Tt]emp/
+[Uu]nityGenerated/
+# file on crash reports
+sysinfo.txt
+# Unity3D generated meta files
+*.pidb.meta
 
-Project N/Temp/UnityLockfile
-Project N/Temp/__Backupscenes/0.backup
-Project N/Library/StateCache/Hierarchy/594faf-mainStage.json
-Project N/Library/EditorInstance.json
-Project N/Library/CurrentMaximizeLayout.dwlt
-Project N/Library/Collab/CollabSnapshot_6f3da2d3-7bdd-47ec-ae0a-5f56fac738d8.txt
-Project N/Assembly-CSharp.csproj
-Project N/Assembly-CSharp.csproj
-Project N/Library/Collab/CollabSnapshot_6f3da2d3-7bdd-47ec-ae0a-5f56fac738d8.txt
-Project N/Library/CurrentMaximizeLayout.dwlt
-Project N/Library/StateCache/Hierarchy/594faf-mainStage.json
-Project N/Assembly-CSharp.csproj
-Project N/Assembly-CSharp.csproj
-Project N/Library/Collab/CollabSnapshot_6f3da2d3-7bdd-47ec-ae0a-5f56fac738d8.txt
-Project N/Library/CurrentMaximizeLayout.dwlt
-Project N/Library/StateCache/Hierarchy/594faf-mainStage.json
+###
+# VS/MD solution and project files
+###
+[Ee]xportedObj/
+*.booproj
+*.csproj
+*.sln
+*.suo
+*.svd
+*.unityproj
+*.user
+*.userprefs
+*.pidb
+.DS_Store
+
+###
+# OS generated
+###
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
