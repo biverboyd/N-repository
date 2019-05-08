@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9164387589527331281}
   - component: {fileID: 9184654124621109675}
   - component: {fileID: 9088752232811478529}
-  - component: {fileID: 9127564847603245097}
+  - component: {fileID: 5098124737696176550}
   m_Layer: 0
   m_Name: 2DPlatformerCamera
   m_TagString: MainCamera
@@ -84,7 +84,7 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9167922576527588933}
   m_Enabled: 1
---- !u!114 &9127564847603245097
+--- !u!114 &5098124737696176550
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,13 +93,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 9167922576527588933}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8e537e363e0a964988f3c850e5f89e1, type: 3}
+  m_Script: {fileID: 11500000, guid: fa8784b62f04e004d99c176215ce5bff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  xMin: -13.2
-  xMax: 60
-  yMin: -1.61
-  yMax: 2
-  lerp: 5
-  minSpeed: 5
+  xMin: -10
+  xMax: 10
+  yMin: -10
+  yMax: 10
+  lerp: 1
+  minSpeed: 1

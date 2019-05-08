@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6587544266865197130}
   - component: {fileID: 6587544266865197132}
   - component: {fileID: 6587544266865197133}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 426461531
-  m_SortingLayer: 4
+  m_SortingLayerID: 596053233
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 2709816165588930048, guid: 3d08e05625a63744898d5d3a2494e566,
     type: 3}
@@ -104,7 +104,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c05de9c75b04e524a8a32c2a86bd9b3f, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -118,7 +118,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 6587544266865197237}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 07aecb5011fe1544b9243b015ad7a88a, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -144,7 +144,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 6587544266865197237}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 07aecb5011fe1544b9243b015ad7a88a, type: 2}
+  m_Material: {fileID: 6200000, guid: c05de9c75b04e524a8a32c2a86bd9b3f, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -165,11 +165,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_JumpForce: 700
   m_GlideForce: 300
+  m_maxSpeed: 100
   m_MovementSmoothing: 0.05
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 1335
+    m_Bits: 567
   m_GroundCheck: {fileID: 6587544266984295600}
   m_CeilingCheck: {fileID: 6587544267524739984}
   animator: {fileID: 6587544266865197133}
@@ -232,7 +233,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6587544266984295600}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +263,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6587544267524739984}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: CeilingCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
