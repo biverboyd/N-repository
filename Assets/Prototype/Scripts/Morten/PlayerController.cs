@@ -124,23 +124,16 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxisRaw("Horizontal") == 0)
         {
             rb.AddForce(-rb.velocity);
+
             momMulti = 1f;
         }
-
-        if (rb.velocity.magnitude > 3f)
-        {
-            rb.AddForce(dir * step + spriteDir * step * momMulti);
-        }
-
         else
         {
             rb.AddForce(dir * step + spriteDir * step * momMulti);
-        }
 
-        else
-        {
             if (rb.velocity.magnitude > 10f)
-                momMulti = Mathf.Clamp(momMulti + (rb.velocity.magnitude * 2f) * Time.deltaTime * 0.05f, -4f, 4f);             
+                momMulti = Mathf.Clamp(momMulti + (rb.velocity.magnitude * 2f) * Time.deltaTime * 0.05f, -4f, 4f);
+                
         }
 
         // JUMP
@@ -186,33 +179,25 @@ public class PlayerController : MonoBehaviour
 
             //            if (rb.velocity.y <= -0.5f || hNormal.y > 0.6f)
 
+            if (hNormal.y < 0.3f)
+                hNormal.y = -1;
 
+            bool tooSteep = hNormal.y < 0;
             bool movingDown = rb.velocity.y < 0;
-            float steepTDown = 0.5f;
-            float steepTUp = 0.3f;
 
             if (movingDown)
             {
-                if (hNormal.y < steepTDown)
-                    hNormal.y = -1;
-            }
-            else
+                grounded = true;
+            } else if(!movingDown && !tooSteep)
             {
-                if (hNormal.y < steepTUp)
-                    hNormal.y = -1;
+                grounded = true;
             }
-
-
-
-
-            bool tooSteep = hNormal.y < 0;
-
-
-            grounded = true;
-            if (tooSteep)
+            else if (!triggerGrounded)
             {
                 grounded = false;
             }
+;
+
 
             ContactPoint2D point = collision.GetContact(0);
 
@@ -230,6 +215,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("ground"))
         {
+
             //rb.mass = 0.5f;
             rb.gravityScale = 1.7f;
         }
@@ -240,7 +226,8 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("ground"))
         {
             //rb.mass = 0.35f;
-            grounded = false;
+
+            triggerGrounded = false;
 
             rb.gravityScale = 1f;
 
