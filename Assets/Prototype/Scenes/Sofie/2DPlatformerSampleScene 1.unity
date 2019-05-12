@@ -217,6 +217,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6587544267524739984, guid: 4809eb6b36a863c4bbaa6643926a0959,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6587544266984295600, guid: 4809eb6b36a863c4bbaa6643926a0959,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6587544266865197130, guid: 4809eb6b36a863c4bbaa6643926a0959,
+        type: 3}
+      propertyPath: OnLandEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnLanding
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4809eb6b36a863c4bbaa6643926a0959, type: 3}
 --- !u!1001 &5140238102317353253
@@ -700,7 +715,7 @@ PrefabInstance:
     - target: {fileID: 1828526201018306489, guid: 21ff1a47c3a96ed45b7ad7bfc8720978,
         type: 3}
       propertyPath: m_DynamicOccludee
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1828526201018306489, guid: 21ff1a47c3a96ed45b7ad7bfc8720978,
         type: 3}

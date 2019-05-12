@@ -42,7 +42,8 @@ public class CharacterController2D : MonoBehaviour
     {
         bool wasGrounded = m_Grounded;
         m_Grounded = false;
-        
+        animator.SetBool("IsGrounded", false);
+
 
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
@@ -52,12 +53,13 @@ public class CharacterController2D : MonoBehaviour
             if (colliders[i].gameObject != gameObject)
             {
                 m_Grounded = true;
-                if (!wasGrounded)
-                    OnLandEvent.Invoke();
-                m_Rigidbody2D.gravityScale = 3;
                 animator.SetBool("IsGrounded", true);
+                if (!wasGrounded && m_Rigidbody2D.velocity.y < 0)
+                OnLandEvent.Invoke();
+                m_Rigidbody2D.gravityScale = 3;
             }
         }
+        
     }
 
 
@@ -68,6 +70,7 @@ public class CharacterController2D : MonoBehaviour
         //only control the player if grounded or airControl is turned on
         if (m_Grounded || m_AirControl)
         {
+            
 
             // Move the character by finding the target velocity
             Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
@@ -93,17 +96,16 @@ public class CharacterController2D : MonoBehaviour
         if (m_Grounded && jump)
         {
             // Add a vertical force to the player.
-            m_Grounded = false;
-            animator.SetBool("IsGrounded", false);
+
+            //m_Grounded = false;
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             
         }
         else if(!m_Grounded && glide)
         {
             m_Rigidbody2D.gravityScale = 1;
-            animator.SetBool("IsGliding", true);
             //m_Rigidbody2D.AddForce(new Vector2(0f, m_GlideForce));
-            
+
         }
         
     }

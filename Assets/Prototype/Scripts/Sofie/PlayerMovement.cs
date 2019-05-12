@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     {
         animator.SetBool("IsJumping",false);
         animator.SetBool("IsGliding", false);
+        
     }
 
     void FixedUpdate()
